@@ -127,3 +127,9 @@ produtos = session.query(Produto).all()
 
 for p in produtos:
     print(f"Produto(id= {p.id})\n nome= {p.nome}\n preco=R$ {p.preco}\nestoque= {p.estoque}\nativo= {p.ativo}")
+
+#Remover o produto
+produto_remover = session.query(Produto).filter_by(id=2).first()
+session.delete(produto_remover)
+session.commit()
+print("Produto removido com sucesso")
