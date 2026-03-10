@@ -53,7 +53,7 @@ class Produto(Base):
         return f"Produto(id= {self.id})\n nome= {self.nome}\n preco=R$ {self.preco}\nestoque= {self.estoque}\nativo= {self.ativo}"
     
 #Criar a conexão com sqlite
-engine = create_engine("sqlite:///estoque.db", echo=True)
+engine = create_engine("sqlite:///estoque.db", echo=False)
 
 #Criar as tabelas no banco se ainda não existirem
 Base.metadata.create_all(engine)
@@ -70,16 +70,59 @@ produto2 = Produto("Teclado", 500, 100, True)
 produto3 = Produto("Mouse", 150, 55, True)
 
 #Adicionar os produtos na sessão
-session.add(produto1)
-session.add(produto2)
-session.add(produto3)
+#session.add(produto1)
+#session.add(produto2)
+#session.add(produto3)
 
 # Confirmar a inserção no banco
 # Salvar no banco de dados
-session.commit()
+#session.commit()
 
 #Listar 
 #Buscar todos os produtos do banco
+#produtos = session.query(Produto).all()
+
+#for p in produtos:
+#    print(f"Produto(id= {p.id})\n nome= {p.nome}\n preco=R$ {p.preco}\nestoque= {p.estoque}\nativo= {p.ativo}")
+
+#Buscar produto com id = 1
+
+#produto_id = session.query(Produto).filter(Produto.id == 1).first()
+#print(produto_id)
+
+#produto_estoque = session.query(Produto).filter(Produto.estoque >= 10).all()
+#print(produto_estoque[1].nome)
+
+#for p in produto_estoque:
+#    if p.estoque >= 60:
+#        print(f"Estoque cheio")
+#    else:
+#        print(f"Estoque de produtos: {p.estoque}")
+
+#produto_id2 = session.query(Produto).filter_by(id=1).first()
+#print(produto_id2)
+
+#Order by
+# desc() -> descrescente
+# asc() -> crescente
+#produtos_organizados = session.query(Produto).order_by(Produto.estoque.asc()).all()
+#for produto in produtos_organizados:
+#    print(f"Nome: {produto.nome}\nQtd de produtos {produto.estoque}")
+
+#Limitar a quantidade de resultado
+#produtos_mais_caros = session.query(Produto).order_by(Produto.preco.asc()).limit(5).all()
+#for p in produtos_mais_caros:
+    #print(f"Nome: {p.nome}, Valor: R${p.preco}")
+
+#UPDATE (atualizar)
+#Busquei o produto
+notebook = session.query(Produto).filter_by(id=1).first()
+notebook.preco= 7800
+
+#Confirmar essa alteração
+session.commit()
+print("Preço atualizado com sucesso")
+
 produtos = session.query(Produto).all()
 
 for p in produtos:
